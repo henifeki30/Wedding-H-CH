@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Heni & Chaima — Vendredi 17 Juillet 2026. Bienvenue à notre mariage.">
+  <title>Heni & Chaima — 17 Juillet 2026</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Loader d'ouverture -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__monogram">H</span>
+      <span class="loader__heart" aria-hidden="true">♥</span>
+      <span class="loader__monogram">C</span>
+    </div>
+    <div class="loader__line"></div>
+  </div>
+
+  <!-- Curseur personnalisé -->
+  <div id="cursor" class="cursor" aria-hidden="true"></div>
+  <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+
+  <!-- Navigation sticky -->
+  <header id="navbar" class="navbar">
+    <nav class="navbar__inner container">
+      <a href="#hero" class="navbar__logo">H <span class="navbar__heart">♥</span> C</a>
+      <button class="navbar__toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="navbar__menu" id="navMenu">
+        <li><a href="#save-the-date">Save The Date</a></li>
+        <li><a href="#details">Détails</a></li>
+        <li><a href="#programme">Programme</a></li>
+        <li><a href="#livre-or">Livre d'Or</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Pétales de fleurs -->
+  <div id="petals" class="petals" aria-hidden="true"></div>
+
+  <!-- Bouton musique -->
+  <button id="musicToggle" class="music-toggle" aria-label="Activer la musique" title="Musique">
+    <svg class="music-toggle__icon music-toggle__icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+      <line x1="23" y1="9" x2="17" y2="15"/>
+      <line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>
+    <svg class="music-toggle__icon music-toggle__icon--on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+      <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+    </svg>
+  </button>
+  <audio id="bgMusic" loop preload="none">
+    <!-- Remplacez par votre fichier musical local -->
+    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ========== HERO ========== -->
+  <section id="hero" class="hero">
+    <div class="hero__floral hero__floral--top" aria-hidden="true">
+      <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 10 C90 30, 70 25, 60 40 C50 55, 70 60, 100 50 C130 60, 150 55, 140 40 C130 25, 110 30, 100 10Z" stroke="currentColor" stroke-width="0.6"/>
+        <path d="M100 50 L100 75" stroke="currentColor" stroke-width="0.5"/>
+        <path d="M85 65 C80 70, 75 68, 78 72" stroke="currentColor" stroke-width="0.4"/>
+        <path d="M115 65 C120 70, 125 68, 122 72" stroke="currentColor" stroke-width="0.4"/>
+      </svg>
+    </div>
+
+    <div class="hero__content">
+      <h1 class="hero__names reveal">
+        <span class="hero__name">Heni</span>
+        <span class="hero__amp">&</span>
+        <span class="hero__name">Chaima</span>
+      </h1>
+      <div class="hero__divider reveal reveal--delay-1" aria-hidden="true">
+        <span></span><span class="hero__divider-icon">♥</span><span></span>
+      </div>
+      <p class="hero__welcome reveal reveal--delay-2">Bienvenue à notre mariage</p>
+      <p class="hero__date reveal reveal--delay-3">17 Juillet 2026</p>
+      <a href="#details" class="btn btn--outline reveal reveal--delay-4">Voir les détails</a>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">
+      <span>Défiler</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ========== SAVE THE DATE ========== -->
+  <section id="save-the-date" class="section save-the-date">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Marquez la date</span>
+        <h2 class="section__title">Save The Date</h2>
+      </div>
+
+      <div class="save-the-date__card reveal">
+        <div class="save-the-date__monogram" aria-hidden="true">
+          <svg viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="0.8"/>
+            <text x="50" y="42" text-anchor="middle" class="monogram-text">H</text>
+            <text x="50" y="62" text-anchor="middle" class="monogram-text monogram-text--small">CH</text>
+            <path d="M8 50 C15 35, 25 30, 35 45" stroke="currentColor" stroke-width="0.5" fill="none"/>
+            <path d="M12 48 C18 38, 24 35, 32 46" stroke="currentColor" stroke-width="0.4" fill="none"/>
+          </svg>
+        </div>
+
+        <p class="save-the-date__month">Juillet 2026</p>
+
+        <div class="calendar">
+          <div class="calendar__weekdays">
+            <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span>
+          </div>
+          <div class="calendar__grid" id="calendarGrid"></div>
+        </div>
+
+        <p class="save-the-date__script">save the date</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COMPTE À REBOURS ========== -->
+  <section id="countdown" class="section countdown-section">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Le grand jour approche</span>
+        <h2 class="section__title">Compte à rebours</h2>
+      </div>
+
+      <div class="countdown reveal" id="countdown">
+        <div class="countdown__item">
+          <span class="countdown__number" id="days">00</span>
+          <span class="countdown__label">Jours</span>
+        </div>
+        <div class="countdown__separator">:</div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="hours">00</span>
+          <span class="countdown__label">Heures</span>
+        </div>
+        <div class="countdown__separator">:</div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="minutes">00</span>
+          <span class="countdown__label">Minutes</span>
+        </div>
+        <div class="countdown__separator">:</div>
+        <div class="countdown__item">
+          <span class="countdown__number" id="seconds">00</span>
+          <span class="countdown__label">Secondes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== DÉTAILS ========== -->
+  <section id="details" class="section details">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Informations pratiques</span>
+        <h2 class="section__title">Détails de l'Événement</h2>
+      </div>
+
+      <div class="details__card reveal">
+        <div class="details__floral" aria-hidden="true">
+          <svg viewBox="0 0 120 60" fill="none">
+            <path d="M60 5 C50 20, 30 15, 25 30 C20 45, 40 50, 60 40 C80 50, 100 45, 95 30 C90 15, 70 20, 60 5Z" stroke="currentColor" stroke-width="0.6"/>
+            <path d="M60 40 L60 55" stroke="currentColor" stroke-width="0.5"/>
+          </svg>
+        </div>
+
+        <div class="details__grid">
+          <div class="details__item">
+            <div class="details__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <h3>Date</h3>
+            <p>Vendredi 17 Juillet 2026</p>
+          </div>
+
+          <div class="details__item">
+            <div class="details__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <h3>Heure</h3>
+            <p>21:00</p>
+          </div>
+
+          <div class="details__item details__item--full">
+            <div class="details__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <h3>Lieu</h3>
+            <p>Salle des Fêtes Forum</p>
+            <p class="details__sub">Route El Aïn Km 2.5 — Sfax</p>
+          </div>
+        </div>
+
+        <div class="details__rings" aria-hidden="true">
+          <svg viewBox="0 0 80 40" fill="none" stroke="currentColor" stroke-width="0.8">
+            <circle cx="30" cy="20" r="12"/>
+            <circle cx="50" cy="20" r="12"/>
+            <path d="M38 14 L42 10" stroke-width="0.6"/>
+            <circle cx="42" cy="9" r="2" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CITATION ========== -->
+  <section id="citation" class="section citation">
+    <div class="container">
+      <blockquote class="citation__quote reveal">
+        <div class="citation__ornament citation__ornament--top" aria-hidden="true">❦</div>
+        <p>«&nbsp;Et parmi Ses signes, Il a créé pour vous des épouses afin que vous trouviez auprès d'elles tranquillité.&nbsp;»</p>
+        <cite>— Coran, Sourate Ar-Rum, verset 21</cite>
+        <div class="citation__ornament citation__ornament--bottom" aria-hidden="true">❦</div>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ========== PROGRAMME ========== -->
+  <section id="programme" class="section programme">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Déroulement</span>
+        <h2 class="section__title">Programme</h2>
+      </div>
+
+      <div class="programme__timeline reveal">
+        <article class="programme__item">
+          <time class="programme__time">21:00</time>
+          <div class="programme__dot"></div>
+          <p class="programme__event">Accueil des invités</p>
+        </article>
+        <article class="programme__item">
+          <time class="programme__time">21:30</time>
+          <div class="programme__dot"></div>
+          <p class="programme__event">Entrée des mariés</p>
+        </article>
+        <article class="programme__item">
+          <time class="programme__time">22:00</time>
+          <div class="programme__dot"></div>
+          <p class="programme__event">Animation</p>
+        </article>
+        <article class="programme__item">
+          <time class="programme__time">00:00</time>
+          <div class="programme__dot"></div>
+          <p class="programme__event">Clôture</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MESSAGE DES MARIÉS ========== -->
+  <section id="message" class="section message">
+    <div class="container">
+      <div class="message__card reveal">
+        <div class="message__floral" aria-hidden="true">♥</div>
+        <h2 class="message__title">Message des Mariés</h2>
+        <p class="message__text">Nous serions honorés de partager ce moment unique avec vous.</p>
+        <p class="message__signature script">Heni & Chaima</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== LIVRE D'OR ========== -->
+  <section id="livre-or" class="section livre-or">
+    <div class="container">
+      <div class="section__header reveal">
+        <span class="section__label">Vos mots</span>
+        <h2 class="section__title">Livre d'Or</h2>
+      </div>
+
+      <form id="guestbookForm" class="guestbook__form reveal">
+        <div class="form-group">
+          <label for="guestName">Nom</label>
+          <input type="text" id="guestName" name="name" required placeholder="Votre nom" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="guestMessage">Message</label>
+          <textarea id="guestMessage" name="message" required rows="4" placeholder="Votre message pour les mariés..."></textarea>
+        </div>
+        <button type="submit" class="btn btn--gold">Envoyer</button>
+      </form>
+
+      <div class="guestbook__messages reveal" id="guestbookMessages"></div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__monogram">
+        <span>H</span>
+        <span class="footer__heart">♥</span>
+        <span>C</span>
+      </div>
+      <p class="footer__names script">Heni & Chaima</p>
+      <p class="footer__date">17 Juillet 2026</p>
+      <div class="footer__divider" aria-hidden="true"></div>
+      <p class="footer__copy">Avec amour &mdash; Heni & Chaima</p>
+    </div>
+  </footer>
+
+  <!-- Bouton retour en haut -->
+  <button id="backToTop" class="back-to-top" aria-label="Retour en haut">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
