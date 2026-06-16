@@ -336,18 +336,71 @@
      MUSIQUE DE FOND
      ============================================================ */
   function initMusic() {
+    bgMusic.volume = 0.45;
+    bgMusic.autoplay = true;
+    let pendingAutoplay = false;
+
+    function updateMusicButton(isPlaying) {
+      musicToggle.classList.toggle('playing', isPlaying);
+      musicToggle.setAttribute(
+        'aria-label',
+        isPlaying ? 'Couper la musique' : 'Relancer la musique'
+      );
+    }
+
+    function removeAutoplayListeners() {
+      document.removeEventListener('pointerdown', startMusicAfterGesture);
+      document.removeEventListener('keydown', startMusicAfterGesture);
+      document.removeEventListener('touchstart', startMusicAfterGesture);
+      document.removeEventListener('scroll', startMusicAfterGesture);
+    }
+
+    function enableAutoplayAfterGesture() {
+      if (pendingAutoplay) return;
+      pendingAutoplay = true;
+
+      document.addEventListener('pointerdown', startMusicAfterGesture, { once: true });
+      document.addEventListener('keydown', startMusicAfterGesture, { once: true });
+      document.addEventListener('touchstart', startMusicAfterGesture, { once: true });
+      document.addEventListener('scroll', startMusicAfterGesture, { once: true, passive: true });
+    }
+
+    function playMusic() {
+      const playPromise = bgMusic.play();
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            pendingAutoplay = false;
+            removeAutoplayListeners();
+            updateMusicButton(true);
+          })
+          .catch(() => {
+            updateMusicButton(false);
+            enableAutoplayAfterGesture();
+          });
+      } else {
+        updateMusicButton(true);
+      }
+    }
+
+    function startMusicAfterGesture(event) {
+      if (event?.target?.closest?.('#musicToggle')) return;
+
+      pendingAutoplay = false;
+      removeAutoplayListeners();
+      playMusic();
+    }
+
+    playMusic();
+    window.addEventListener('load', playMusic, { once: true });
+
     musicToggle.addEventListener('click', () => {
       if (bgMusic.paused) {
-        bgMusic.play().then(() => {
-          musicToggle.classList.add('playing');
-          musicToggle.setAttribute('aria-label', 'Couper la musique');
-        }).catch(() => {
-          // Lecture bloquée par le navigateur
-        });
+        playMusic();
       } else {
         bgMusic.pause();
-        musicToggle.classList.remove('playing');
-        musicToggle.setAttribute('aria-label', 'Activer la musique');
+        updateMusicButton(false);
       }
     });
   }

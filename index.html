@@ -51,7 +51,7 @@
   <div id="petals" class="petals" aria-hidden="true"></div>
 
   <!-- Bouton musique -->
-  <button id="musicToggle" class="music-toggle" aria-label="Activer la musique" title="Musique">
+  <button id="musicToggle" class="music-toggle playing" aria-label="Couper la musique" title="Musique">
     <svg class="music-toggle__icon music-toggle__icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
       <path d="M11 5L6 9H2v6h4l5 4V5z"/>
       <line x1="23" y1="9" x2="17" y2="15"/>
@@ -63,7 +63,7 @@
       <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
     </svg>
   </button>
-  <audio id="bgMusic" loop preload="none">
+  <audio id="bgMusic" autoplay loop preload="auto" playsinline>
     <!-- Remplacez par votre fichier musical local -->
     <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
   </audio>
