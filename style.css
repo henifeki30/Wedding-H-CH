@@ -646,13 +646,14 @@ button {
 
 .monogram-text {
   font-family: var(--font-secondary);
-  font-size: 14px;
+  font-size: 18px;
   fill: var(--soft-black);
 }
 
-.monogram-text--small {
-  font-size: 10px;
-  fill: var(--warm-gray);
+.monogram-amp {
+  font-family: var(--font-secondary);
+  font-size: 8px;
+  fill: var(--gold);
 }
 
 .save-the-date__month {

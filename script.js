@@ -338,7 +338,10 @@
   function initMusic() {
     bgMusic.volume = 0.45;
     bgMusic.autoplay = true;
+    bgMusic.load();
     let pendingAutoplay = false;
+    let userStoppedMusic = false;
+    const autoplayEvents = ['pointerdown', 'mousedown', 'mouseup', 'touchstart', 'keydown', 'wheel', 'scroll'];
 
     function updateMusicButton(isPlaying) {
       musicToggle.classList.toggle('playing', isPlaying);
@@ -349,26 +352,38 @@
     }
 
     function removeAutoplayListeners() {
-      document.removeEventListener('pointerdown', startMusicAfterGesture);
-      document.removeEventListener('keydown', startMusicAfterGesture);
-      document.removeEventListener('touchstart', startMusicAfterGesture);
-      document.removeEventListener('scroll', startMusicAfterGesture);
+      autoplayEvents.forEach((eventName) => {
+        document.removeEventListener(eventName, startMusicAfterGesture, true);
+      });
     }
 
     function enableAutoplayAfterGesture() {
       if (pendingAutoplay) return;
       pendingAutoplay = true;
 
-      document.addEventListener('pointerdown', startMusicAfterGesture, { once: true });
-      document.addEventListener('keydown', startMusicAfterGesture, { once: true });
-      document.addEventListener('touchstart', startMusicAfterGesture, { once: true });
-      document.addEventListener('scroll', startMusicAfterGesture, { once: true, passive: true });
+      autoplayEvents.forEach((eventName) => {
+        const isPassiveEvent = eventName === 'scroll' || eventName === 'wheel' || eventName === 'touchstart';
+        document.addEventListener('' + eventName, startMusicAfterGesture, {
+          once: true,
+          capture: true,
+          passive: isPassiveEvent,
+        });
+      });
     }
 
     function playMusic() {
+      if (userStoppedMusic) return;
+
       const playPromise = bgMusic.play();
 
       if (playPromise !== undefined) {
+        window.setTimeout(() => {
+          if (bgMusic.paused && !userStoppedMusic) {
+            updateMusicButton(false);
+            enableAutoplayAfterGesture();
+          }
+        }, 1200);
+
         playPromise
           .then(() => {
             pendingAutoplay = false;
@@ -387,18 +402,47 @@
     function startMusicAfterGesture(event) {
       if (event?.target?.closest?.('#musicToggle')) return;
 
-      pendingAutoplay = false;
-      removeAutoplayListeners();
       playMusic();
     }
 
+    bgMusic.addEventListener('playing', () => {
+      pendingAutoplay = false;
+      removeAutoplayListeners();
+      updateMusicButton(true);
+    });
+
+    bgMusic.addEventListener('timeupdate', () => {
+      if (!bgMusic.paused) {
+        updateMusicButton(true);
+      }
+    });
+
+    bgMusic.addEventListener('pause', () => {
+      updateMusicButton(false);
+    });
+
+    bgMusic.addEventListener('error', () => {
+      updateMusicButton(false);
+      enableAutoplayAfterGesture();
+    });
+
     playMusic();
-    window.addEventListener('load', playMusic, { once: true });
+    window.setTimeout(() => updateMusicButton(!bgMusic.paused), 800);
+    window.addEventListener('pageshow', playMusic);
+    window.addEventListener('focus', playMusic);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        playMusic();
+      }
+    });
+    enableAutoplayAfterGesture();
 
     musicToggle.addEventListener('click', () => {
       if (bgMusic.paused) {
+        userStoppedMusic = false;
         playMusic();
       } else {
+        userStoppedMusic = true;
         bgMusic.pause();
         updateMusicButton(false);
       }
@@ -439,6 +483,7 @@
      INITIALISATION
      ============================================================ */
   function init() {
+    initMusic();
     initLoader();
     initCursor();
     initNavbar();
@@ -448,14 +493,9 @@
     initScrollReveal();
     initParallax();
     initGuestbook();
-    initMusic();
     initBackToTop();
     initSmoothScroll();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  init();
 })();

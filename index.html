@@ -51,7 +51,7 @@
   <div id="petals" class="petals" aria-hidden="true"></div>
 
   <!-- Bouton musique -->
-  <button id="musicToggle" class="music-toggle playing" aria-label="Couper la musique" title="Musique">
+  <button id="musicToggle" class="music-toggle" aria-label="Relancer la musique" title="Musique">
     <svg class="music-toggle__icon music-toggle__icon--off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
       <path d="M11 5L6 9H2v6h4l5 4V5z"/>
       <line x1="23" y1="9" x2="17" y2="15"/>
@@ -64,9 +64,62 @@
     </svg>
   </button>
   <audio id="bgMusic" autoplay loop preload="auto" playsinline>
-    <!-- Remplacez par votre fichier musical local -->
-    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+    <source src="assets/a-thousand-years.mp3" type="audio/mpeg">
   </audio>
+  <script>
+    (function () {
+      var music = document.getElementById('bgMusic');
+      var toggle = document.getElementById('musicToggle');
+      var events = ['pointerdown', 'mousedown', 'mouseup', 'touchstart', 'keydown', 'wheel', 'scroll'];
+      if (!music) return;
+
+      function updateButton(isPlaying) {
+        if (!toggle) return;
+
+        toggle.classList.toggle('playing', isPlaying);
+        toggle.setAttribute('aria-label', isPlaying ? 'Couper la musique' : 'Relancer la musique');
+      }
+
+      function removeUnlockEvents() {
+        events.forEach(function (eventName) {
+          document.removeEventListener(eventName, unlockMusic, true);
+        });
+      }
+
+      function playMusic() {
+        music.volume = 0.45;
+        music.play()
+          .then(function () {
+            removeUnlockEvents();
+            updateButton(true);
+          })
+          .catch(function () {
+            updateButton(false);
+          });
+      }
+
+      function unlockMusic() {
+        playMusic();
+      }
+
+      music.volume = 0.45;
+      music.addEventListener('playing', function () {
+        removeUnlockEvents();
+        updateButton(true);
+      });
+
+      events.forEach(function (eventName) {
+        var isPassiveEvent = eventName === 'scroll' || eventName === 'wheel' || eventName === 'touchstart';
+        document.addEventListener(eventName, unlockMusic, {
+          once: true,
+          capture: true,
+          passive: isPassiveEvent
+        });
+      });
+
+      playMusic();
+    })();
+  </script>
 
   <!-- ========== HERO ========== -->
   <section id="hero" class="hero">
@@ -111,10 +164,9 @@
         <div class="save-the-date__monogram" aria-hidden="true">
           <svg viewBox="0 0 100 100" fill="none">
             <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="0.8"/>
-            <text x="50" y="42" text-anchor="middle" class="monogram-text">H</text>
-            <text x="50" y="62" text-anchor="middle" class="monogram-text monogram-text--small">CH</text>
-            <path d="M8 50 C15 35, 25 30, 35 45" stroke="currentColor" stroke-width="0.5" fill="none"/>
-            <path d="M12 48 C18 38, 24 35, 32 46" stroke="currentColor" stroke-width="0.4" fill="none"/>
+            <text x="50" y="48" text-anchor="middle" class="monogram-text">H</text>
+            <text x="50" y="62" text-anchor="middle" class="monogram-amp">&amp;</text>
+            <text x="50" y="78" text-anchor="middle" class="monogram-text">C</text>
           </svg>
         </div>
 
